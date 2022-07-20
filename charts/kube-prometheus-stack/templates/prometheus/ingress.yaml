@@ -11,7 +11,9 @@ kind: Ingress
 metadata:
 {{- if .Values.prometheus.ingress.annotations }}
   annotations:
-{{ toYaml .Values.prometheus.ingress.annotations | indent 4 }}
+  {{- range $key, $value := .Values.prometheus.ingress.annotations }}
+    {{ $key }}: {{ $value | quote }}
+  {{- end }}
 {{- end }}
   name: {{ $serviceName }}
   namespace: {{ template "kube-prometheus-stack.namespace" . }}
